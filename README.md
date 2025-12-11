@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is The Green Room: Influence Dashboard
+MBA 600 Final Project
 
-## Getting Started
+"The Green Room" is a personalized Behavioral Override System designed to bridge the gap between academic influence theory and professional application.
 
-First, run the development server:
+Built as a specialized dashboard for a Product Manager in the Entertainment Technology sector, this application serves as a "backstage" staging ground to prepare strategies, pre-wire meetings, and track the application of influence tactics in real-time.
 
-```bash
+🎯 Project Objective
+The goal of this project is to influence the user's future self. Instead of a static essay, this is a functional web application designed to:
+
+Counteract specific weaknesses: (e.g., reluctance to use authority, waiting to be asked).
+
+Gamify behavior change: Using streaks and progress bars to leverage "Reward Power" and "Consistency" principles.
+
+Distill course concepts: Transforming abstract theory (Cialdini, Pfeffer, Granovetter) into actionable protocols.
+
+✨ Key Features
+1. The Strategy Dashboard
+
+Active Protocol HUD: A dynamic header that displays currently active strategies, keeping the user's intention front-and-center (e.g., "Invest more in relationships than is convenient").
+
+Concept Cards: Interactive cards representing core influence frameworks (e.g., Structural Hole Engineering, The Authority Pivot). Each card contains:
+
+Personal Synthesis: A reflection on why this concept matters to the user.
+
+The Protocol: A concrete checklist of actions to take.
+
+Situation History: A filtered view of past logs relevant to that specific concept.
+
+2. The Situation Log (with Persistence)
+
+Real-time Logging: A form to quickly capture influence challenges or victories.
+
+Categorization: Entries are tagged to specific concepts (e.g., "Network Maintenance" or "Intentionality").
+
+Local Storage: Data is persisted in the browser's local storage, ensuring privacy and continuity between sessions.
+
+3. Gamification Engine
+
+Weekly Progress Bar: Tracks the number of scenarios logged in the current week (Target: 3).
+
+Streak Counter: Tracks consecutive weeks where the target was met.
+
+Visual Rewards: The interface changes state (gold/celebratory) when goals are met to reinforce positive behavior.
+
+4. The Script Archive (Course Library)
+
+Integrated PDF Viewer: A dedicated tab to browse and view course slides without leaving the application.
+
+Master-Detail Layout: Quickly switch between lectures using a browser-like file interface.
+
+🛠️ Tech Stack
+Framework: Next.js 14 (React)
+
+Styling: Tailwind CSS
+
+Icons: Lucide React
+
+Deployment: Vercel (Recommended)
+
+Storage: Browser LocalStorage (Client-side only)
+
+🚀 Getting Started
+1. Prerequisites
+
+Ensure you have Node.js installed.
+
+2. Installation
+
+Clone the repository and install dependencies:
+
+Bash
+npm install
+# IMPORTANT: Ensure the icon library is installed
+npm install lucide-react
+3. Folder Structure Setup (Crucial for Library)
+
+For the PDF viewer to work, you must place your slide PDFs in the public directory:
+
+/my-project
+  /public
+    /slides
+      class-1 slides.pdf
+      class-2 slides.pdf
+      ... (etc)
+4. Running the Development Server
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open http://localhost:3000 with your browser to see the result.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🧠 Core Protocols Included
+The application comes pre-loaded with five strategic protocols derived from the course material:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The Dormant Tie Protocol: Leveraging weak ties for new information (Granovetter).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Structural Hole Engineering: Bridging disconnected groups to create value (Burt).
 
-## Learn More
+The 20-Slot Rule: Radical intentionality with time allocation (Buffett/Jobs).
 
-To learn more about Next.js, take a look at the following resources:
+The Visibility Engine: Overcoming the reluctance to self-promote (Ethos).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Authority Pivot: Using the legitimate power of the Product Manager role.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📄 AI Disclosure
+Code architecture, component logic, and CSS styling were generated with the assistance of Gemini (Google). All conceptual summaries, personal reflections, and strategic applications of course material are 100% human-generated by the student (besides this README).
