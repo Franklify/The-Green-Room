@@ -2,13 +2,32 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Brain, Target, Shield, Zap, Info, 
-  Filter, CheckCircle2, Lock, Save, Trash2, Eye,
+  Filter, CheckCircle2, Lock, Save, Trash2,
   Network, Megaphone, Clock, Anchor, FileText, Download, LayoutDashboard,
-  ChevronDown, ChevronUp, Flame, Trophy
+  ChevronDown, ChevronUp, Flame, Trophy, LucideIcon
 } from 'lucide-react';
 
+// --- TYPES ---
+
+interface Concept {
+  id: number;
+  title: string;
+  category: string;
+  icon: LucideIcon;
+  color: string;
+  insight: string;
+  prescription: string[];
+}
+
+interface Log {
+  id: number;
+  text: string;
+  conceptId: number;
+  date: string | Date; // Can be a string (from JSON) or Date object (newly created)
+}
+
 // --- DATA: THE PM INFLUENCE TOOLKIT (v2) ---
-const initialConcepts = [
+const initialConcepts: Concept[] = [
   {
     id: 1,
     title: "The Dormant Tie Protocol",
@@ -67,7 +86,7 @@ const initialConcepts = [
     category: "Leadership",
     icon: Shield,
     color: "bg-emerald-700",
-    insight: "I shy away from using authority. But 'Legitimate Power' comes from the ROLE. I own the Roadmap, and that's my badge.",
+    insight: "I shy away from using authority. But 'Legitimate Power' comes from the ROLE. I own the Roadmap. That is my badge.",
     prescription: [
       "Depersonalize the 'No': 'The Roadmap rules exclude this.'",
       "Cite the Vision: Anchor demands to the product vision.",
@@ -79,7 +98,7 @@ const initialConcepts = [
 // --- HELPER FUNCTIONS FOR GAMIFICATION ---
 
 // Get the Sunday of the week for a given date (to group logs by week)
-const getWeekStart = (dateStr: string) => {
+const getWeekStart = (dateStr: string | Date): number => {
   const d = new Date(dateStr);
   const day = d.getDay();
   const diff = d.getDate() - day; // adjust when day is sunday
@@ -88,11 +107,11 @@ const getWeekStart = (dateStr: string) => {
   return sunday.getTime();
 };
 
-const calculateStreak = (logs) => {
+const calculateStreak = (logs: Log[]): number => {
   if (!logs || logs.length === 0) return 0;
   
   // Group counts by week timestamp
-  const weeklyCounts = {};
+  const weeklyCounts: Record<number, number> = {};
   logs.forEach(log => {
     const weekStart = getWeekStart(log.date);
     weeklyCounts[weekStart] = (weeklyCounts[weekStart] || 0) + 1;
@@ -124,7 +143,12 @@ const calculateStreak = (logs) => {
 
 // --- COMPONENTS ---
 
-const StrategyHeader = ({ activeIds, concepts }) => {
+interface StrategyHeaderProps {
+  activeIds: number[];
+  concepts: Concept[];
+}
+
+const StrategyHeader: React.FC<StrategyHeaderProps> = ({ activeIds, concepts }) => {
   const activeItems = concepts.filter(c => activeIds.includes(c.id));
 
   return (
@@ -163,8 +187,11 @@ const StrategyHeader = ({ activeIds, concepts }) => {
   );
 };
 
-// NEW: GAMIFICATION TRACKER COMPONENT
-const ProgressTracker = ({ logs }) => {
+interface ProgressTrackerProps {
+  logs: Log[];
+}
+
+const ProgressTracker: React.FC<ProgressTrackerProps> = ({ logs }) => {
   // Calculate this week's progress
   const thisWeekStart = getWeekStart(new Date());
   const thisWeekLogs = logs.filter(l => getWeekStart(l.date) === thisWeekStart);
@@ -220,13 +247,18 @@ const ProgressTracker = ({ logs }) => {
   );
 };
 
-const SituationLog = ({ onAddLog, concepts }) => {
+interface SituationLogProps {
+  onAddLog: (text: string, conceptId: number) => void;
+  concepts: Concept[];
+}
+
+const SituationLog: React.FC<SituationLogProps> = ({ onAddLog, concepts }) => {
   const [newLog, setNewLog] = useState("");
-  const [selectedConceptId, setSelectedConceptId] = useState(concepts[0].id);
+  const [selectedConceptId, setSelectedConceptId] = useState<number>(concepts[0].id);
 
   const handleSave = () => {
     if (!newLog.trim()) return;
-    onAddLog(newLog, parseInt(selectedConceptId));
+    onAddLog(newLog, selectedConceptId);
     setNewLog("");
   };
 
@@ -243,7 +275,7 @@ const SituationLog = ({ onAddLog, concepts }) => {
             <div className="relative">
               <select 
                 value={selectedConceptId}
-                onChange={(e) => setSelectedConceptId(e.target.value)}
+                onChange={(e) => setSelectedConceptId(parseInt(e.target.value))}
                 className="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg appearance-none focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-700"
               >
                 {concepts.map(c => (
@@ -280,7 +312,15 @@ const SituationLog = ({ onAddLog, concepts }) => {
   );
 };
 
-const ConceptCard = ({ data, isActive, onToggleActive, logs, onDeleteLog }) => {
+interface ConceptCardProps {
+  data: Concept;
+  isActive: boolean;
+  onToggleActive: (id: number) => void;
+  logs: Log[];
+  onDeleteLog: (id: number) => void;
+}
+
+const ConceptCard: React.FC<ConceptCardProps> = ({ data, isActive, onToggleActive, logs, onDeleteLog }) => {
   const [showLogs, setShowLogs] = useState(false);
   const relevantLogs = logs.filter(l => l.conceptId === data.id);
 
@@ -371,7 +411,7 @@ const ConceptCard = ({ data, isActive, onToggleActive, logs, onDeleteLog }) => {
   );
 };
 
-const CourseLibrary = () => {
+const CourseLibrary: React.FC = () => {
   const [selectedSlide, setSelectedSlide] = useState("class-1 slides.pdf");
   const slides = [
     { name: "Class 1: Introduction", file: "class-1 slides.pdf" },
@@ -384,8 +424,6 @@ const CourseLibrary = () => {
     { name: "Class 8: Persuasion (II)", file: "class-8 slides.pdf" },
     { name: "Class 9: Leverage Inventory", file: "class-9 slides.pdf" },
     { name: "Class 10: Coalitions", file: "class-10 slides.pdf" },
-    { name: "Class 11: Status", file: "class-11 slides.pdf" },
-    { name: "Class 12: Capstone", file: "class-12 slides.pdf" }
   ];
 
   return (
@@ -460,8 +498,11 @@ const CourseLibrary = () => {
 export default function InfluenceDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [filter, setFilter] = useState("All");
-  const [logs, setLogs] = useState([]);
-  const [activeProtocolIds, setActiveProtocolIds] = useState([]);
+  
+  // STATE: Logs
+  const [logs, setLogs] = useState<Log[]>([]);
+  // STATE: Active Protocol IDs
+  const [activeProtocolIds, setActiveProtocolIds] = useState<number[]>([]);
 
   useEffect(() => {
     const savedLogs = localStorage.getItem('influenceLogs');
@@ -470,8 +511,8 @@ export default function InfluenceDashboard() {
     if (savedProtocols) setActiveProtocolIds(JSON.parse(savedProtocols));
   }, []);
 
-  const handleAddLog = (text, conceptId) => {
-    const newEntry = { 
+  const handleAddLog = (text: string, conceptId: number) => {
+    const newEntry: Log = { 
       id: Date.now(), 
       text, 
       conceptId, 
@@ -482,14 +523,14 @@ export default function InfluenceDashboard() {
     localStorage.setItem('influenceLogs', JSON.stringify(updatedLogs));
   };
 
-  const handleDeleteLog = (id) => {
+  const handleDeleteLog = (id: number) => {
     const updated = logs.filter(l => l.id !== id);
     setLogs(updated);
     localStorage.setItem('influenceLogs', JSON.stringify(updated));
   };
 
-  const handleToggleProtocol = (id) => {
-    let updated;
+  const handleToggleProtocol = (id: number) => {
+    let updated: number[];
     if (activeProtocolIds.includes(id)) {
       updated = activeProtocolIds.filter(pid => pid !== id);
     } else {
@@ -542,7 +583,7 @@ export default function InfluenceDashboard() {
           <p className="text-xl text-slate-500 max-w-2xl leading-relaxed">
             The backstage practice room for <strong>me</strong> to practice influence.
             Here I can save scenarios that arise, categorize them into my weakpoint protocols, and reference the course notes.
-            I can assign current protocols to focus on, and gamify logigng with a weekly streak.  
+            I can assign current protocols to focus on, and gamify logigng with a weekly streak. 
           </p>
         </div>
       </header>
