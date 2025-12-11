@@ -79,7 +79,7 @@ const initialConcepts = [
 // --- HELPER FUNCTIONS FOR GAMIFICATION ---
 
 // Get the Sunday of the week for a given date (to group logs by week)
-const getWeekStart = (dateStr) => {
+const getWeekStart = (dateStr: string) => {
   const d = new Date(dateStr);
   const day = d.getDay();
   const diff = d.getDate() - day; // adjust when day is sunday
