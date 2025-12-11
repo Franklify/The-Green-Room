@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Brain, Target, Shield, Zap, Info, 
   Filter, CheckCircle2, Lock, Save, Trash2,
-  Network, Megaphone, Clock, Anchor, FileText, Download, LayoutDashboard,
+  Network, Megaphone, Clock, Anchor, Eye, FileText, Download, LayoutDashboard,
   ChevronDown, ChevronUp, Flame, Trophy, LucideIcon
 } from 'lucide-react';
 
@@ -31,10 +31,10 @@ const initialConcepts: Concept[] = [
   {
     id: 1,
     title: "The Dormant Tie Protocol",
-    category: "Network Maintenance",
+    category: "Networks",
     icon: Anchor,
     color: "bg-blue-600",
-    insight: "I often let relationships fade once I leave a project. Class 5 taught that 'Weak Ties' are my best source of new info. Letting these rot is a career liability.",
+    insight: "I often let relationships fade once I leave a project. Weak Ties are my best source of new info. Letting these rot is a career liability.",
     prescription: [
       "The 'No-Ask' Check-in: Send one note this week to a former colleague with zero agenda.",
       "The 'Alumni' Audit: Have I spoken to my top 3 past colleagues in 6 months?",
@@ -44,14 +44,14 @@ const initialConcepts: Concept[] = [
   {
     id: 2,
     title: "Structural Hole Engineering",
-    category: "Network Expansion",
+    category: "Networks",
     icon: Network,
     color: "bg-indigo-600",
-    insight: "I stick to my 'home team'. Class 5 showed value comes from bridging 'Structural Holes'. If I only talk to people who know what I know, I add no unique value.",
+    insight: "I stick to my 'home team', but value comes from bridging 'structural holes'. If I only talk to people who know what I know, it's not adding unique value.",
     prescription: [
       "The 'Outsider' Lunch: Eat with someone from a function I don't understand.",
-      "The 50% Rule: At events, spend 50% of time with people I don't know.",
-      "Be the Broker: Identify stakeholders who are blocked because they aren't talking."
+      "The 50% Rule: At events, spend 50% of my time with people I don't know.",
+      "Be the Broker: Identify stakeholders who are blocked because they're not talking."
     ]
   },
   {
@@ -60,24 +60,24 @@ const initialConcepts: Concept[] = [
     category: "Intentionality",
     icon: Clock,
     color: "bg-amber-600",
-    insight: "I get swept up in the 'whirlwind'. Class 2 referenced Warren Buffett's '20-Slot Rule'. I need to treat my time as a scarce, strategic asset.",
+    insight: "I get swept up in the whirlwind. I need to treat my time as a scarce, strategic asset.",
     prescription: [
-      "The 'No' Audit: Delete one meeting that doesn't serve a Q1 goal.",
-      "Strategic Blocking: Block 2 hours/week for 'Deep Work'.",
-      "Goal Alignment: Ask 'Which of my top 3 goals does this advance?'"
+      "Saying No: Delete one meeting that doesn't serve me.",
+      "Strategic Blocking: Block 2-4 hours/week for 'Deep Work'.",
+      "Goal Alignment: Ask today 'Which of my top 3 goals does this task advance?'"
     ]
   },
   {
     id: 4,
     title: "The Visibility Engine",
-    category: "Ethos / Self-Promotion",
+    category: "Ethos",
     icon: Megaphone,
     color: "bg-rose-600",
-    insight: "I believe work should 'speak for itself.' Class 8 taught this is a fallacy. If I don't shape the narrative of my competence (Ethos), others will define it for me.",
+    insight: "I believe work should speak for itself, but this is a fallocy. If I don't shape the story of my competence, others will define it for me.",
     prescription: [
-      "The 'Win' Email: Send a weekly 3-bullet summary of wins to my boss.",
-      "Contextual Credentialing: Share a 'learning' that subtly highlights a success.",
-      "The 'Hype Man' Proxy: Ask a peer to mention my project in a meeting."
+      "The Win Email: Send a weekly 3-bullet summary of wins to my boss.",
+      "Contextual Credentialing: Share a learning that subtly highlights a success.",
+      "The Hype Man Proxy: Ask a peer to mention my project in a meeting."
     ]
   },
   {
@@ -86,11 +86,72 @@ const initialConcepts: Concept[] = [
     category: "Leadership",
     icon: Shield,
     color: "bg-emerald-700",
-    insight: "I shy away from using authority. But 'Legitimate Power' comes from the ROLE. I own the Roadmap. That is my badge.",
+    insight: "I shy away from using authority. But legitimate power comes from the ROLE. I own the Roadmap.",
     prescription: [
-      "Depersonalize the 'No': 'The Roadmap rules exclude this.'",
-      "Cite the Vision: Anchor demands to the product vision.",
-      "The Silence Tactic: State the constraint and then wait."
+      "Depersonalize any 'No': When you decline, it's strictly business.",
+      "Communicate My Vision: Anchor my demands to the product vision.",
+    ]
+  },
+  {
+    id: 6,
+    title: "The Pre-Wire Protocol",
+    category: "Coalitions / Strategy",
+    icon: Network, // Represents connecting nodes before the main event
+    color: "bg-purple-600",
+    insight: "The meeting is just a performance; the real decision is made in the 'meeting before the meeting.' I often hope my logic will win the room, but that's a gamble. Influence is done one-on-one beforehand.",
+    prescription: [
+      "The 'Stakeholder Scan': Before sending the invite, list who's a 'Yes', 'No', or 'Maybe'.",
+      "The 'Safe Space' Preview: Show the rough draft to the loudest detractor 2 days early. Ask them 'What would stop you from supporting this?'",
+      "The 'Ally Anchor': Ask a supporter to speak second in the meeting to validate my first point immediately."
+    ]
+  },
+  {
+    id: 7,
+    title: "The Warmth Filter",
+    category: "Awareness",
+    icon: Flame, // Represents Warmth
+    color: "bg-orange-500",
+    insight: "I naturally lead with data/roadmaps to prove I belong. But in reality people assess intent before ability (aka warmth before compliance). I've got to signal as a friend first.",
+    prescription: [
+      "The First Two Minutes: Spend the start of the call on pure rapport, not the agenda",
+      "The 'Humility Marker': Admit a small uncertainty or mistake early to lower people's defenses."
+    ]
+  },
+  {
+    id: 8,
+    title: "The Narrative Transport",
+    category: "Ethos",
+    icon: Megaphone, // Represents Storytelling/Broadcast
+    color: "bg-pink-600",
+    insight: "In Entertainment Tech we create experiences, but I often communicate in 'Stats'. But stories are remembered way more than facts. I need to wrap the metric in some user story.",
+    prescription: [
+      "Visuals Over Text: Never send a text-heavy slide. Use a screenshot or diagram to make it 'Vivid' (Class 7).",
+      "The 'One Thing' Rule: If they only remember one sentence from this presentation, what is it? Repeat it 3 times."
+    ]
+  },
+  {
+    id: 9,
+    title: "The Opportunity Radar",
+    category: "Awareness",
+    icon: Eye, // Represents seeing what others miss
+    color: "bg-teal-600",
+    insight: "My weakness is not seeing opportunities others miss. Think about situational awareness and staying vigilant for changes in the environment. I get stuck in the weeds of execution and miss changes.",
+    prescription: [
+      "The 'Zoom Out' Ritual: Monday morning I can scan competitor news and industry shifts, not just my email.",
+      "The 'Why Now?' Audit: When a stakeholder pushes a new feature, ask why it matters NOW. Is something shifting?",
+      "Pattern Recognition: Note when 3 different people mention the same problem. That's a signal, not noise."
+    ]
+  },
+  {
+    id: 10,
+    title: "The Reciprocity Trigger",
+    category: "Networks",
+    icon: Zap, // Represents the spark of exchange
+    color: "bg-cyan-600",
+    insight: "I tend to view favors as transactional. The Heidi Roizen case taught 'Quid Sine Quo', or giving without an immediate ask. This builds a savings account of influence I can cash out later.",
+    prescription: [
+      "The Gift: Send a resource (article, tool, intro) to a peer with the subject line 'Thinking of you! No reply needed'.",
+      "Public Praise: Use the company Slack or all-hands to credit someone else for a win.",
     ]
   }
 ];
